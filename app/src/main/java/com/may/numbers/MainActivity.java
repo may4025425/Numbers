@@ -26,71 +26,57 @@ import java.util.Random;
 public class MainActivity extends AppCompatActivity {
 
 
-    String TAG = MainActivity.class.getSimpleName()  ;
-    private TextView number;
-    int counter;
+    String TAG = MainActivity.class.getSimpleName();
     int secret = new Random().nextInt(10)+1;
-    private ImageView result;
+    int counter;
+    private TextView edNumber;
+    private ImageView edResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        Log.d(TAG,"secret"+secret);
-
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        number = findViewById(R.id.number);
-        result = findViewById(R.id.result_image);
+        //Log.d("MainActivity","secret"+secret);這樣表示也可以
+        Log.d(TAG,"secret"+secret);
+        edNumber = findViewById(R.id.number);
+        edResult = findViewById(R.id.result_image);
 
         FloatingActionButton fab = findViewById(R.id.fab);
 
         fab.setOnClickListener(new View.OnClickListener() {
-
-
-
             @Override
             public void onClick(View view) {
-                //宣告變數
-                counter++;
-                number.setText(String.valueOf(counter));//記得選字串
-                result.setAlpha(1.0f);
-                result.setVisibility(View.VISIBLE);
-
-
-
-                //功能判斷
-                if(counter==secret){
-                    Toast.makeText(MainActivity.this,"you got it!!!",Toast.LENGTH_LONG).show();
-                    result.setImageResource(R.drawable.shocked);
-                }else {
-                    result.setImageResource(R.drawable.sadface);
-                    result.animate().alpha(0.0f).setDuration(1200);
-                }
-
-
-
 
             }
         });
     }
 
-        public void reset(View view){
-
+     public void add(View view){
+         //宣告變數
+         counter++;
+         edNumber.setText(String.valueOf(counter));//記得選字串
+         edResult.setAlpha(1.0f);
+         edResult.setVisibility(View.VISIBLE);
+         //功能判斷
+         if(counter==secret){
+             Toast.makeText(MainActivity.this," you got it! ",Toast.LENGTH_LONG)
+                     .show();
+             edResult.setImageResource(R.drawable.shocked);
+             edResult.setAlpha(1.0f);
+             edResult.setVisibility(View.VISIBLE);
+         }else {
+             edResult.setImageResource(R.drawable.sadface);
+             edResult.animate().alpha(0.0f).setDuration(600);
+         }
+     }
+        public void again(View view){
+            secret = new Random().nextInt(10)+1;
             counter = 0;
-            number.setText(String.valueOf(counter));
-
-
+            edNumber.setText(String.valueOf(counter));
+            edResult.clearAnimation();
         }
-
-
-
-
-
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
